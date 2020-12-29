@@ -1,1 +1,1 @@
-# common_ml_exploration_application
+Dataset explorer for machine learning applications.
