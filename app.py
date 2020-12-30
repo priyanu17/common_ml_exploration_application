@@ -19,13 +19,21 @@ def main():
     Streamlit content from html</p>
     </div>
     """
-    st.markdown(html_temp, unsafe_allow_html=True)
 
-    def file_selector(folder_path="."):
+    html_temp_2 = """
+    
+        <body style="background-color:green;">
+        <p style = "color:white; font-size:30px">
+        Text in white over a green background </p>
+        </body>
+
+    """
+    st.markdown(html_temp_2, unsafe_allow_html=True)
+
+    def file_selector(folder_path="./datasets"):
         filenames = os.listdir(folder_path)
         selected_filename = st.selectbox("Select a file", filenames)
 
-        
-
+    file_selector()
 if __name__ == "__main__":
     main()
