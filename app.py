@@ -41,6 +41,7 @@ def main():
     # Read Data
     df = pd.read_csv(selected_file)
 
+    st.subheader("")
     # Show Dataset
     if st.checkbox("Display Dataset : "):
         number = st.number_input("Enter number of rows to view", 1, 25)
@@ -77,6 +78,58 @@ def main():
         st.text("Data types of various columns")
         data_types = df.dtypes
         st.write(data_types)
+
+    # describe dataset
+    if st.checkbox("Display dataset summary : "):
+        st.text("Dataset summary is as follows ")
+        st.write(df.describe().transpose())
+
+    # Plots and Visualizations
+    st.subheader("Data Visualization (Customizable Plot)")
+
+    # Pie Chart
+    if st.checkbox("Pie Chart"):
+        all_column_names = df.columns.tolist()
+        selected_one_column = st.selectbox(
+            "(Select columns to plot pie chart)", all_column_names)
+        if st.button("Generate Pie Chart"):
+            st.text("Generating Pie chart for selected fields")
+            st.write(df[selected_one_column].value_counts().plot.pie(
+                autopct="%1.1f%%"))
+
+            st.pyplot()
+
+    all_column_names = df.columns.tolist()
+
+    st.subheader("More types of plots")
+    type_of_plot = st.selectbox("Select type of plot", [
+                                "area", "bar", "line", "hist", "box", "kde"])
+
+    selected_columns_names = st.multiselect(
+        "Select Columns To plot", all_column_names)
+
+    if st.button("Click to generate plot"):
+        st.success(
+            f"Generate  '{type_of_plot}' plot for  {selected_columns_names}")
+
+        if type_of_plot == "area":
+            custom_data = df[selected_columns_names]
+            st.area_chart(custom_data)
+
+        elif type_of_plot == "bar":
+            custom_data = df[selected_columns_names]
+            st.bar_chart(custom_data)
+
+        elif type_of_plot == "line":
+            custom_data = df[selected_columns_names]
+            st.line_chart(custom_data)
+
+        # more custom plots
+        else:
+            custom_data_plot = df[selected_columns_names].plot(
+                kind=type_of_plot)
+            st.write(custom_data_plot)
+            # st.pypolt()
 
 
 if __name__ == "__main__":
